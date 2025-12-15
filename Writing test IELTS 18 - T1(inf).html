@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>IELTS Pabs – Writing task practice – IELTS 18 Test 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f4f6fb;
+      --card-bg: #ffffff;
+      --text-main: #111827;
+      --text-soft: #6b7280;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --accent-soft: #e5edff;
+      --button: #2563eb;
+      --button-hover: #1d4ed8;
+      --danger: #b91c1c;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #edf2ff 0, #f4f6fb 45%, #eef2f7 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      color: var(--text-main);
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1220px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.14);
+      overflow: hidden;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    /* MODE SCREEN */
+
+    .mode-header {
+      text-align: center;
+      padding: 28px 24px 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mode-header h1 {
+      font-size: 2.3rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .mode-header p {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .mode-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      padding: 24px;
+    }
+
+    .mode-card {
+      flex: 1 1 280px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      padding: 22px 22px 26px;
+      background: #fafbff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mode-card.secondary {
+      background: #ffffff;
+    }
+
+    .mode-icon {
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+    }
+
+    .mode-card h2 {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+
+    .mode-card p {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      margin-bottom: 12px;
+    }
+
+    .mode-section-title {
+      font-weight: 600;
+      margin: 8px 0 4px;
+      font-size: 0.93rem;
+    }
+
+    .task-options {
+      margin-bottom: 10px;
+    }
+
+    .task-option {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .task-option input {
+      margin-right: 8px;
+      width: 16px;
+      height: 16px;
+    }
+
+    .select-row {
+      margin-top: 4px;
+    }
+
+    .select-row label {
+      display: block;
+      font-size: 0.88rem;
+      margin-bottom: 4px;
+    }
+
+    .select-row select {
+      width: 100%;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+      background: #ffffff;
+    }
+
+    .mode-summary {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      margin-top: 8px;
+    }
+
+    .mode-button-row {
+      margin-top: 16px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 24px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--button);
+      color: #ffffff;
+      transition: background 0.15s ease, transform 0.08s ease;
+    }
+
+    .btn:hover {
+      background: var(--button-hover);
+      transform: translateY(-1px);
+    }
+
+    .small-text {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-top: 6px;
+    }
+
+    /* TEST SCREEN TOP BAR */
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      background: #f9fafb;
+    }
+
+    .top-left {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .brand-main {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    .top-centre {
+      flex: 1;
+      text-align: center;
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .top-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .spell-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-right: 4px;
+      font-size: 0.8rem;
+    }
+
+    .spell-label {
+      color: var(--text-soft);
+    }
+
+    .spell-switch {
+      position: relative;
+      width: 40px;
+      height: 20px;
+      border-radius: 999px;
+      border: none;
+      background: #e5e7eb;
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .spell-switch .switch-knob {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      transition: transform 0.15s ease;
+    }
+
+    .spell-switch.on {
+      background: var(--accent);
+    }
+
+    .spell-switch.on .switch-knob {
+      transform: translateX(20px);
+    }
+
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-btn:hover {
+      background: #f3f4f6;
+    }
+
+    .submit-btn {
+      border-radius: 999px;
+      padding: 8px 20px;
+      border: none;
+      background: var(--button);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .submit-btn:hover {
+      background: var(--button-hover);
+    }
+
+    #timerDisplay {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+        Consolas, "Liberation Mono";
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      font-size: 0.8rem;
+      color: var(--text-main);
+    }
+
+    #timerDisplay.hidden {
+      visibility: hidden;
+    }
+
+    #timerDisplay.warning {
+      border-color: #f97316;
+      color: #b45309;
+    }
+
+    #timerDisplay.danger {
+      border-color: var(--danger);
+      color: var(--danger);
+      animation: timer-flash 1s infinite;
+    }
+
+    @keyframes timer-flash {
+      0%, 50% {
+        background: #ffffff;
+      }
+      50%, 100% {
+        background: #fee2e2;
+      }
+    }
+
+    /* MAIN LAYOUT */
+
+    .test-main {
+      display: flex;
+      min-height: 420px;
+      max-height: calc(100vh - 190px);
+    }
+
+    .pane {
+      padding: 22px 24px;
+      overflow-y: auto;
+    }
+
+    .pane-left {
+      flex: 1;
+      background: #ffffff;
+    }
+
+    .pane-right {
+      flex: 1;
+      background: #fcfcff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .divider {
+      width: 10px;
+      background: #f3f4f6;
+      border-left: 1px solid #e5e7eb;
+      border-right: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: col-resize;
+    }
+
+    .divider-handle {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      user-select: none;
+    }
+
+    /* LEFT PANE CONTENT */
+
+    .test-label {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      margin-bottom: 4px;
+    }
+
+    .task-heading {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .task-meta {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+
+    .task-meta strong {
+      font-weight: 700;
+    }
+
+    .task-body {
+      font-size: 0.96rem;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    .task-body ul {
+      margin: 8px 0 0 18px;
+    }
+
+    .task-box {
+      border: 1px solid #111827;
+      padding: 14px 16px;
+      margin: 14px 0 16px;
+      font-size: 0.96rem;
+      line-height: 1.6;
+    }
+
+    .task-footer-text {
+      font-size: 0.95rem;
+      margin-top: 10px;
+    }
+
+    .task-footer-text:last-child {
+      margin-top: 16px;
+    }
+
+    /* RIGHT PANE CONTENT */
+
+    #answerInput {
+      flex: 1;
+      resize: none;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      font-size: 0.96rem;
+      line-height: 1.5;
+      outline: none;
+      background: #ffffff;
+    }
+
+    #answerInput:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.09);
+    }
+
+    .word-row {
+      font-size: 0.86rem;
+      color: var(--text-soft);
+      margin-top: 6px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* BOTTOM TABS AND NAV */
+
+    .bottom-bar {
+      border-top: 1px solid var(--border);
+      padding: 10px 16px 14px;
+      background: #f9fafb;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .task-tabs {
+      flex: 1;
+      display: flex;
+      gap: 10px;
+    }
+
+    .task-tab {
+      flex: 1 1 0;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      font-size: 0.94rem;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .task-tab.active {
+      border-color: var(--button);
+      color: var(--button-hover);
+      background: #eff6ff;
+      font-weight: 600;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    /* NOTES PANEL */
+
+    .notes-panel {
+      position: fixed;
+      right: 20px;
+      bottom: 70px;
+      width: 260px;
+      height: 200px;
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.25);
+      display: flex;
+      flex-direction: column;
+      resize: both;
+      overflow: hidden;
+      z-index: 30;
+      /* help with dragging */
+      cursor: default;
+    }
+
+    .notes-panel.hidden {
+      display: none;
+    }
+
+    .notes-header {
+      padding: 6px 10px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      background: #eef2ff;
+    }
+
+    #notesText {
+      flex: 1;
+      border: none;
+      padding: 8px 10px;
+      font-size: 0.9rem;
+      resize: none;
+      outline: none;
+      background: #ffffff;
+    }
+
+    .notes-close {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notes-close:hover {
+      background: #f3f4f6;
+    }
+
+    /* SUBMIT MODAL */
+
+    .submit-modal.hidden {
+      display: none;
+    }
+
+    .submit-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+    }
+
+    .submit-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+    }
+
+    .submit-dialog {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 360px;
+      max-width: 94vw;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .submit-header {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .submit-header h2 {
+      font-size: 1rem;
+    }
+
+    .submit-close {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      cursor: pointer;
+    }
+
+    .submit-body {
+      padding: 10px 14px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .submit-label {
+      font-size: 0.84rem;
+      color: var(--text-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .submit-input {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 6px 8px;
+      font-size: 0.86rem;
+    }
+
+    .submit-preview {
+      min-height: 120px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 6px 8px;
+      font-size: 0.8rem;
+      resize: vertical;
+    }
+
+    .submit-footer {
+      padding: 10px 14px 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* Fullscreen adjustments */
+    .app.fullscreen-active {
+      max-width: 100%;
+      border-radius: 0;
+    }
+
+    .app.fullscreen-active .test-main {
+      max-height: none;
+      min-height: calc(100vh - 160px); /* top bar + bottom bar */
+    }
+
+    .app.fullscreen-active .pane-left,
+    .app.fullscreen-active .pane-right {
+      padding-top: 26px;
+      padding-bottom: 26px;
+    }
+
+    @media (max-width: 960px) {
+      .test-main {
+        flex-direction: column;
+        max-height: none;
+      }
+
+      .divider {
+        display: none;
+      }
+
+      .pane-left,
+      .pane-right {
+        flex: 0 0 auto;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .mode-grid {
+        flex-direction: column;
+      }
+
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .top-left,
+      .top-centre,
+      .top-right {
+        flex: 0 0 auto;
+      }
+
+      .top-right {
+        justify-content: flex-end;
+      }
+
+      .bottom-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .task-tabs {
+        width: 100%;
+      }
+
+      .nav-buttons {
+        align-self: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- MODE SELECTION -->
+    <section id="modeScreen" class="screen active">
+      <div class="mode-header">
+        <h1>Choose a mode</h1>
+        <p>
+          Select practice mode to focus on one task, or try the full
+          simulation to copy real IELTS timing.
+        </p>
+      </div>
+
+      <div class="mode-grid">
+        <!-- Practice mode card -->
+        <article class="mode-card">
+          <div>
+            <div class="mode-icon">📝</div>
+            <h2>Practice mode</h2>
+            <p>
+              Use this mode to work on specific tasks. You can choose an
+              optional time limit.
+            </p>
+
+            <div class="mode-section-title">1. Choose task or tasks</div>
+            <div class="task-options">
+              <label class="task-option">
+                <input type="checkbox" id="optFull" checked />
+                <span>Full tasks (2 tasks, 2 questions)</span>
+              </label>
+              <label class="task-option">
+                <input type="checkbox" id="optTask1" checked />
+                <span>Task 1 (1 question)</span>
+              </label>
+              <label class="task-option">
+                <input type="checkbox" id="optTask2" checked />
+                <span>Task 2 (1 question)</span>
+              </label>
+            </div>
+
+            <div class="mode-section-title">2. Choose a time limit</div>
+            <div class="select-row">
+              <label for="practiceTime">Time for all selected tasks</label>
+              <select id="practiceTime">
+                <option value="0">No limit</option>
+                <option value="20">20 minutes</option>
+                <option value="40">40 minutes</option>
+                <option value="60" selected>60 minutes</option>
+                <option value="until930">Until class end (9:30)</option>
+              </select>
+            </div>
+            <p class="mode-summary">
+              You can move between selected tasks at any time.
+            </p>
+          </div>
+          <div class="mode-button-row">
+            <button id="startPractice" class="btn">Start now</button>
+          </div>
+          <p class="small-text">
+            “Until class end” uses the computer clock and stops at 9:30.
+          </p>
+        </article>
+
+        <!-- Simulation mode card -->
+        <article class="mode-card secondary">
+          <div>
+            <div class="mode-icon">💻</div>
+            <h2>Simulation test mode</h2>
+            <p>
+              Take the complete writing test with a fixed sixty minute timer,
+              similar to the real computer based exam.
+            </p>
+
+            <div class="mode-section-title">Test information</div>
+            <p class="mode-summary">
+              Full tasks (60 minutes, 2 tasks, 2 questions). The timer does
+              not stop once you begin.
+            </p>
+          </div>
+          <div class="mode-button-row">
+            <button id="startSimulation" class="btn">Start now</button>
+          </div>
+          <p class="small-text">
+            Recommended when you want full exam conditions.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- TEST SCREEN -->
+    <section id="testScreen" class="screen">
+      <header class="top-bar">
+        <div class="top-left">
+          <div class="brand">
+            <span class="brand-main">IELTS Pabs</span>
+            <span class="brand-sub">Writing task practice – IELTS 18 Test 1</span>
+          </div>
+        </div>
+        <div class="top-centre"></div>
+        <div class="top-right">
+          <span id="timerDisplay" class="hidden">60:00 remaining</span>
+          <div id="spellToggleWrapper" class="spell-toggle hidden">
+            <span class="spell-label">Spell check</span>
+            <button
+              id="spellToggle"
+              class="spell-switch"
+              type="button"
+              aria-pressed="false"
+            >
+              <span class="switch-knob"></span>
+            </button>
+          </div>
+          <button id="notesBtn" class="icon-btn" title="Notes">📝</button>
+          <button id="fullScreenBtn" class="icon-btn" title="Full screen">⤢</button>
+          <button id="submitBtn" class="submit-btn">
+            <span>Submit</span>
+            <span>➤</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="test-main">
+        <section id="paneLeft" class="pane pane-left">
+          <div class="test-label">Test 1</div>
+          <div class="task-heading" id="taskHeading">WRITING TASK 2</div>
+          <p class="task-meta" id="taskMeta">
+            You should spend about forty minutes on this task.
+          </p>
+
+          <div class="task-body" id="taskBody">
+            <!-- Filled by JavaScript -->
+          </div>
+        </section>
+
+        <div id="divider" class="divider">
+          <span class="divider-handle">⟷</span>
+        </div>
+
+        <section class="pane pane-right">
+          <textarea
+            id="answerInput"
+            spellcheck="false"
+            placeholder="Type your essay here.."
+          ></textarea>
+          <div class="word-row">
+            Word count:
+            <span id="wordCount">0</span>
+          </div>
+        </section>
+      </main>
+
+      <footer class="bottom-bar">
+        <div id="tabs" class="task-tabs">
+          <!-- Tabs created by JavaScript -->
+        </div>
+        <div class="nav-buttons">
+          <button id="prevTaskBtn" class="nav-btn" title="Previous task">
+            ‹
+          </button>
+          <button id="nextTaskBtn" class="nav-btn" title="Next task">
+            ›
+          </button>
+        </div>
+      </footer>
+
+      <!-- Notes panel -->
+      <div id="notesPanel" class="notes-panel hidden">
+        <div class="notes-header">
+          <span>Notes</span>
+          <button id="closeNotesBtn" class="notes-close" title="Close">✕</button>
+        </div>
+        <textarea id="notesText" placeholder="Type your notes here..."></textarea>
+      </div>
+    </section>
+  </div>
+
+  <div id="submitModal" class="submit-modal hidden">
+    <div class="submit-backdrop"></div>
+    <div class="submit-dialog">
+      <div class="submit-header">
+        <h2>Send your writing</h2>
+        <button id="closeSubmitModal" class="submit-close" type="button">✕</button>
+      </div>
+
+      <div class="submit-body">
+        <label class="submit-label">
+          Your name
+          <input id="studentName" type="text" class="submit-input" />
+        </label>
+
+        <label class="submit-label">
+          Your email (optional)
+          <input id="studentEmail" type="email" class="submit-input" />
+        </label>
+
+        <label class="submit-label">
+          Summary to send / copy
+          <textarea id="submissionPreview" class="submit-preview" readonly></textarea>
+        </label>
+      </div>
+
+      <div class="submit-footer">
+        <button id="copySubmission" class="btn" type="button">
+          Copy to clipboard
+        </button>
+        <button id="sendSubmission" class="btn" type="button">
+          Open email
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ------------ TASK DATA ------------
+    // Replace the prompts below with your own questions if you wish.
+
+    const task1 = {
+      id: 1,
+      heading: "WRITING TASK 1",
+      meta: "You should spend about 20 minutes on this task.",
+      bodyHtml:
+        "<p>Your Englsih-speaking friend ha asked for your help with a college project he/she is doing about celebrating New Year in different countries.</p>" +
+        "<p>Write a letter to your friend. In your letter</p>" +
+        "<ul>" +
+        "<li>say how important New Year is to people in your country</li>" +
+        "<li>describe how New Year is celebrated in your country</li>" +
+        "<li>explain what you like about New Year celebrations in your</li>" +
+        "</ul>" +
+        "<p class='task-footer-text'>Write at least 150 words.</p>"
+    };
+
+    // Paraphrased Test 1 style essay question
+    const task2 = {
+      id: 2,
+      heading: "WRITING TASK 2",
+      meta: "You should spend about forty minutes on this task.",
+      bodyHtml:
+        "<p>Write about the following topic:</p>" +
+        "<div class='task-box'>" +
+        "<p><strong>It is sometimes possible to pay somebody to do things you don't want to do, or don't have time to do, for example, household chores or looking after children.</strong></p>" +
+        "<p><strong>Is this a good way of providing work for others?</strong></p>" +
+        "<p><strong>Should people do these things themselves</strong></p>" +
+        "</div>" +
+        "<p class='task-footer-text'>Give reasons for your answer and include any relevant examples from your own knowledge or experience.</p>" +
+        "<p class='task-footer-text'>Write at least 250 words.</p>"
+    };
+
+    const allTasks = { 1: task1, 2: task2 };
+
+    // ------------ STATE ------------
+
+    let mode = "practice"; // "practice" or "simulation"
+    let activeTasks = [1, 2];
+    let currentTaskIndex = 0; // index in activeTasks
+    const answers = { 1: "", 2: "" };
+    let timerSeconds = 0;
+    let timerId = null;
+    let spellcheckEnabled = false;
+
+    // ------------ DOM REFERENCES ------------
+
+    const modeScreen = document.getElementById("modeScreen");
+    const testScreen = document.getElementById("testScreen");
+
+    const optFull = document.getElementById("optFull");
+    const optTask1 = document.getElementById("optTask1");
+    const optTask2 = document.getElementById("optTask2");
+    const practiceTimeSelect = document.getElementById("practiceTime");
+
+    const startPracticeBtn = document.getElementById("startPractice");
+    const startSimulationBtn = document.getElementById("startSimulation");
+
+    const timerDisplay = document.getElementById("timerDisplay");
+    const taskHeadingEl = document.getElementById("taskHeading");
+    const taskMetaEl = document.getElementById("taskMeta");
+    const taskBodyEl = document.getElementById("taskBody");
+    const answerInput = document.getElementById("answerInput");
+    const wordCountEl = document.getElementById("wordCount");
+    const tabsContainer = document.getElementById("tabs");
+    const prevTaskBtn = document.getElementById("prevTaskBtn");
+    const nextTaskBtn = document.getElementById("nextTaskBtn");
+    const submitBtn = document.getElementById("submitBtn");
+    const paneLeft = document.getElementById("paneLeft");
+    const paneRight = document.querySelector(".pane-right");
+    const divider = document.getElementById("divider");
+
+    const notesBtn = document.getElementById("notesBtn");
+    const notesPanel = document.getElementById("notesPanel");
+    const closeNotesBtn = document.getElementById("closeNotesBtn");
+
+    const fullScreenBtn = document.getElementById("fullScreenBtn");
+    const spellToggleWrapper = document.getElementById("spellToggleWrapper");
+    const spellToggle = document.getElementById("spellToggle");
+    const submitModal = document.getElementById("submitModal");
+    const closeSubmitModal = document.getElementById("closeSubmitModal");
+    const submissionPreview = document.getElementById("submissionPreview");
+    const studentNameInput = document.getElementById("studentName");
+    const studentEmailInput = document.getElementById("studentEmail");
+    const copySubmissionBtn = document.getElementById("copySubmission");
+    const sendSubmissionBtn = document.getElementById("sendSubmission");
+
+    // ------------ MODE SELECTION ------------
+
+    startPracticeBtn.addEventListener("click", () => {
+      mode = "practice";
+
+      const selected = [];
+      if (optFull.checked) {
+        selected.push(1, 2);
+      }
+      if (optTask1.checked) selected.push(1);
+      if (optTask2.checked) selected.push(2);
+
+      const unique = Array.from(new Set(selected)).sort();
+      if (unique.length === 0) {
+        alert("Please choose at least one task.");
+        return;
+      }
+      activeTasks = unique;
+
+      const timeValue = practiceTimeSelect.value;
+      if (timeValue === "0") {
+        startTest({ seconds: 0 });
+      } else if (timeValue === "until930") {
+        const secs = getSecondsUntil930();
+        if (secs <= 0) {
+          alert(
+            "The class end time (9:30) has already passed. No timer will be used."
+          );
+          startTest({ seconds: 0 });
+        } else {
+          startTest({ seconds: secs });
+        }
+      } else {
+        const minutes = parseInt(timeValue, 10) || 0;
+        startTest({ seconds: minutes * 60 });
+      }
+    });
+
+    startSimulationBtn.addEventListener("click", () => {
+      mode = "simulation";
+      activeTasks = [1, 2];
+      const SIMULATION_MINUTES = 60;
+      startTest({ seconds: SIMULATION_MINUTES * 60 });
+    });
+
+    function startTest(config) {
+      const totalSeconds = config && typeof config.seconds === "number"
+        ? config.seconds
+        : 0;
+
+      modeScreen.classList.remove("active");
+      testScreen.classList.add("active");
+
+      answers[1] = "";
+      answers[2] = "";
+      answerInput.disabled = false;
+
+      if (mode === "practice") {
+        spellToggleWrapper.classList.remove("hidden");
+      } else {
+        spellToggleWrapper.classList.add("hidden");
+      }
+      setSpellcheck(false);
+      updateSpellToggleUI();
+
+      buildTabs();
+      currentTaskIndex = 0;
+      loadCurrentTask();
+      updateTaskNavButtons();
+
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+      }
+
+      if (totalSeconds > 0) {
+        startTimerSeconds(totalSeconds);
+      } else {
+        timerDisplay.classList.add("hidden");
+      }
+    }
+
+    // ------------ TABS AND TASK LOADING ------------
+
+    function buildTabs() {
+      tabsContainer.innerHTML = "";
+      activeTasks.forEach((id) => {
+        const btn = document.createElement("button");
+        btn.className = "task-tab";
+        btn.textContent = "Task " + id;
+        btn.dataset.id = String(id);
+        btn.addEventListener("click", () => {
+          saveCurrentAnswer();
+          currentTaskIndex = activeTasks.indexOf(id);
+          loadCurrentTask();
+          updateTaskNavButtons();
+          refreshTabStyles();
+        });
+        tabsContainer.appendChild(btn);
+      });
+      refreshTabStyles();
+    }
+
+    function refreshTabStyles() {
+      const tabButtons = tabsContainer.querySelectorAll(".task-tab");
+      tabButtons.forEach((btn) => {
+        const id = parseInt(btn.dataset.id, 10);
+        btn.classList.toggle(
+          "active",
+          id === activeTasks[currentTaskIndex]
+        );
+      });
+    }
+
+    function loadCurrentTask() {
+      const taskId = activeTasks[currentTaskIndex];
+      const task = allTasks[taskId];
+      if (!task) return;
+
+      taskHeadingEl.textContent = task.heading;
+      taskMetaEl.textContent = task.meta;
+      taskBodyEl.innerHTML = task.bodyHtml;
+
+      answerInput.value = answers[taskId] || "";
+      updateWordCount();
+
+      refreshTabStyles();
+    }
+
+    function saveCurrentAnswer() {
+      const taskId = activeTasks[currentTaskIndex];
+      answers[taskId] = answerInput.value;
+    }
+
+    prevTaskBtn.addEventListener("click", () => {
+      if (currentTaskIndex > 0) {
+        saveCurrentAnswer();
+        currentTaskIndex -= 1;
+        loadCurrentTask();
+        updateTaskNavButtons();
+      }
+    });
+
+    nextTaskBtn.addEventListener("click", () => {
+      if (currentTaskIndex < activeTasks.length - 1) {
+        saveCurrentAnswer();
+        currentTaskIndex += 1;
+        loadCurrentTask();
+        updateTaskNavButtons();
+      }
+    });
+
+    function updateTaskNavButtons() {
+      prevTaskBtn.disabled = currentTaskIndex === 0;
+      nextTaskBtn.disabled =
+        currentTaskIndex === activeTasks.length - 1;
+    }
+
+    // ------------ TIMER ------------
+
+    function startTimerSeconds(totalSeconds) {
+      timerSeconds = totalSeconds;
+      timerDisplay.classList.remove("hidden");
+      updateTimerDisplay();
+
+      timerId = setInterval(() => {
+        timerSeconds -= 1;
+        if (timerSeconds <= 0) {
+          timerSeconds = 0;
+          updateTimerDisplay();
+          clearInterval(timerId);
+          timerId = null;
+          onTimeUp();
+        } else {
+          updateTimerDisplay();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const m = Math.floor(timerSeconds / 60);
+      const s = timerSeconds % 60;
+      const text =
+        m.toString().padStart(2, "0") +
+        ":" +
+        s.toString().padStart(2, "0") +
+        " remaining";
+      timerDisplay.textContent = text;
+
+      timerDisplay.classList.remove("warning", "danger");
+      if (timerSeconds <= 5 * 60 && timerSeconds > 3 * 60) {
+        timerDisplay.classList.add("warning");
+      } else if (timerSeconds <= 3 * 60) {
+        timerDisplay.classList.add("danger");
+      }
+    }
+
+    function onTimeUp() {
+      saveCurrentAnswer();
+
+      if (timerDisplay) {
+        timerDisplay.classList.remove("warning", "danger");
+        timerDisplay.classList.add("danger");
+        timerDisplay.textContent = "Time is up!";
+      }
+
+      // Students can continue writing if they really need to.
+      // If you still want an alert, you can uncomment this:
+      // alert("Time is up. Please finish your sentence and then click Submit.");
+    }
+
+    function setSpellcheck(on) {
+      spellcheckEnabled = on;
+      if (answerInput) {
+        answerInput.spellcheck = on;
+      }
+    }
+
+    function updateSpellToggleUI() {
+      if (!spellToggle) return;
+      spellToggle.classList.toggle("on", spellcheckEnabled);
+      spellToggle.setAttribute("aria-pressed", spellcheckEnabled ? "true" : "false");
+    }
+
+    if (spellToggle) {
+      spellToggle.addEventListener("click", () => {
+        setSpellcheck(!spellcheckEnabled);
+        updateSpellToggleUI();
+      });
+    }
+
+    function getSecondsUntil930() {
+      const now = new Date();
+      const target = new Date(now);
+      target.setHours(9, 30, 0, 0);
+      return Math.floor((target - now) / 1000);
+    }
+
+    // ------------ WORD COUNT (IELTS STYLE) ------------
+
+    answerInput.addEventListener("input", updateWordCount);
+
+    function countWordsIELTS(rawText) {
+      // Normalise curly quotes, then count sequences of letters/numbers
+      // with optional apostrophes and hyphens as a SINGLE word.
+      const text = rawText
+        .replace(/[\u2018\u2019]/g, "'")
+        .replace(/[\u201C\u201D]/g, '"')
+        .trim();
+
+      if (!text) return 0;
+
+      const matches = text.match(
+        /[A-Za-z0-9]+(?:['’][A-Za-z0-9]+)*(?:-[A-Za-z0-9]+(?:['’][A-Za-z0-9]+)*)?/g
+      );
+      return matches ? matches.length : 0;
+    }
+
+    function updateWordCount() {
+      const count = countWordsIELTS(answerInput.value);
+      wordCountEl.textContent = String(count);
+    }
+
+    // ------------ DIVIDER DRAG ------------
+
+    let isDragging = false;
+
+    divider.addEventListener("mousedown", () => {
+      isDragging = true;
+      document.body.style.cursor = "col-resize";
+    });
+
+    window.addEventListener("mouseup", () => {
+      isDragging = false;
+      document.body.style.cursor = "default";
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      const rect = testScreen.getBoundingClientRect();
+      const minPercent = 30;
+      const maxPercent = 70;
+      const offsetX = e.clientX - rect.left;
+      let percent = (offsetX / rect.width) * 100;
+      if (percent < minPercent) percent = minPercent;
+      if (percent > maxPercent) percent = maxPercent;
+
+      paneLeft.style.flex = "0 0 " + percent + "%";
+      paneRight.style.flex = "0 0 " + (100 - percent) + "%";
+    });
+
+    // ------------ SUBMIT (EMAIL) ------------
+
+    submitBtn.addEventListener("click", () => {
+      saveCurrentAnswer();
+
+      // Build the text that will be copied / emailed
+      const lines = [];
+      lines.push("Mode: " + mode);
+      if (timerDisplay && !timerDisplay.classList.contains("hidden")) {
+        lines.push("Timer status: " + timerDisplay.textContent);
+      }
+      lines.push("");
+
+      activeTasks.forEach((id) => {
+        const answerText = answers[id] || "";
+        const wordCount = countWordsIELTS(answerText);
+
+        lines.push("=== Task " + id + " ===");
+        lines.push("Word count: " + wordCount);
+        lines.push("");
+        lines.push(answerText || "[no answer]");
+        lines.push("");
+      });
+
+      const previewText = lines.join("\n");
+      submissionPreview.value = previewText;
+
+      // Show modal
+      submitModal.classList.remove("hidden");
+    });
+
+    closeSubmitModal.addEventListener("click", () => {
+      submitModal.classList.add("hidden");
+    });
+
+    submitModal
+      .querySelector(".submit-backdrop")
+      .addEventListener("click", () => {
+        submitModal.classList.add("hidden");
+      });
+
+    copySubmissionBtn.addEventListener("click", () => {
+      navigator.clipboard
+        .writeText(submissionPreview.value)
+        .then(() => {
+          alert("All text copied. Paste it into an email or Teams message.");
+        })
+        .catch(() => {
+          alert("Could not copy automatically. Please select and copy manually.");
+        });
+    });
+
+    sendSubmissionBtn.addEventListener("click", () => {
+      const teacherEmail = "pablo.jaramillo@ilsc.com.au";
+      const studentName = studentNameInput.value.trim();
+      const studentEmail = studentEmailInput.value.trim();
+
+      let subject = "IELTS Writing – Test 1 answers";
+      if (studentName) {
+        subject += " – " + studentName;
+      }
+
+      const headerLines = [];
+      if (studentName) headerLines.push("Student name: " + studentName);
+      if (studentEmail) headerLines.push("Student email: " + studentEmail);
+      headerLines.push("");
+
+      const bodyText = headerLines.join("\n") + submissionPreview.value;
+      const mailto =
+        "mailto:" +
+        encodeURIComponent(teacherEmail) +
+        "?subject=" +
+        encodeURIComponent(subject) +
+        "&body=" +
+        encodeURIComponent(bodyText);
+
+      // Try to open the mail client
+      window.location.href = mailto;
+    });
+
+    // ------------ CHECKBOX SYNC ------------
+
+    optFull.addEventListener("change", () => {
+      if (optFull.checked) {
+        optTask1.checked = true;
+        optTask2.checked = true;
+      }
+    });
+
+    // ------------ NOTES ------------
+
+    notesBtn.addEventListener("click", () => {
+      notesPanel.classList.toggle("hidden");
+    });
+
+    closeNotesBtn.addEventListener("click", () => {
+      notesPanel.classList.add("hidden");
+    });
+
+    // Make notes panel draggable by its header
+    (function makeNotesDraggable() {
+      const header = document.querySelector(".notes-header");
+      let isDraggingNotes = false;
+      let startX = 0;
+      let startY = 0;
+      let startLeft = 0;
+      let startTop = 0;
+
+      header.style.cursor = "move";
+
+      header.addEventListener("mousedown", (e) => {
+        isDraggingNotes = true;
+        const rect = notesPanel.getBoundingClientRect();
+        startX = e.clientX;
+        startY = e.clientY;
+        startLeft = rect.left;
+        startTop = rect.top;
+        document.body.style.userSelect = "none";
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        if (!isDraggingNotes) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        // keep within viewport
+        let newLeft = startLeft + dx;
+        let newTop = startTop + dy;
+
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const rect = notesPanel.getBoundingClientRect();
+
+        if (newLeft < 0) newLeft = 0;
+        if (newTop < 0) newTop = 0;
+        if (newLeft + rect.width > vw) newLeft = vw - rect.width;
+        if (newTop + rect.height > vh) newTop = vh - rect.height;
+
+        notesPanel.style.left = newLeft + "px";
+        notesPanel.style.top = newTop + "px";
+        notesPanel.style.right = "auto";
+        notesPanel.style.bottom = "auto";
+      });
+
+      window.addEventListener("mouseup", () => {
+        if (!isDraggingNotes) return;
+        isDraggingNotes = false;
+        document.body.style.userSelect = "";
+      });
+    })();
+
+    // ------------ FULLSCREEN ------------
+
+    fullScreenBtn.addEventListener("click", () => {
+      const root = document.documentElement;
+      const app = document.querySelector(".app");
+
+      if (!document.fullscreenElement) {
+        if (root.requestFullscreen) {
+          root.requestFullscreen().then(() => {
+            if (app) app.classList.add("fullscreen-active");
+          }).catch(() => {});
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().then(() => {
+            if (app) app.classList.remove("fullscreen-active");
+          }).catch(() => {});
+        }
+      }
+    });
+
+    // Also clean up if user presses Esc to exit fullscreen
+    document.addEventListener("fullscreenchange", () => {
+      const app = document.querySelector(".app");
+      if (!document.fullscreenElement && app) {
+        app.classList.remove("fullscreen-active");
+      }
+    });
+  </script>
+</body>
+</html>
