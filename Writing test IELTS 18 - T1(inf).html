@@ -591,6 +591,37 @@
       background: #f3f4f6;
     }
 
+    /* STRUCTURE PANEL */
+
+    .structure-panel {
+      right: 300px;
+      bottom: 70px;
+      width: 320px;
+      height: 240px;
+    }
+
+    #structureContent {
+      flex: 1;
+      border: none;
+      padding: 10px 10px;
+      font-size: 0.9rem;
+      outline: none;
+      background: #ffffff;
+      overflow: auto;
+      line-height: 1.5;
+    }
+
+    #structureContent ul,
+    #structureContent ol {
+      margin: 8px 0 0 18px;
+    }
+
+    .dear-line {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
     /* SUBMIT MODAL */
 
     .submit-modal.hidden {
@@ -862,6 +893,17 @@
               <span class="switch-knob"></span>
             </button>
           </div>
+          <div id="structureToggleWrapper" class="spell-toggle hidden">
+            <span class="spell-label">Structure</span>
+            <button
+              id="structureToggle"
+              class="spell-switch"
+              type="button"
+              aria-pressed="false"
+            >
+              <span class="switch-knob"></span>
+            </button>
+          </div>
           <button id="notesBtn" class="icon-btn" title="Notes">📝</button>
           <button id="fullScreenBtn" class="icon-btn" title="Full screen">⤢</button>
           <button id="submitBtn" class="submit-btn">
@@ -923,6 +965,14 @@
         </div>
         <textarea id="notesText" placeholder="Type your notes here..."></textarea>
       </div>
+
+      <div id="structurePanel" class="notes-panel structure-panel hidden">
+        <div class="notes-header">
+          <span>Recommended structure</span>
+          <button id="closeStructureBtn" class="notes-close" title="Close">✕</button>
+        </div>
+        <div id="structureContent"></div>
+      </div>
     </section>
   </div>
 
@@ -971,14 +1021,19 @@
       heading: "WRITING TASK 1",
       meta: "You should spend about 20 minutes on this task.",
       bodyHtml:
-        "<p>Your Englsih-speaking friend ha asked for your help with a college project he/she is doing about celebrating New Year in different countries.</p>" +
+        "<div class='task-box task1-box'>" +
+        "<p><strong>Your English-speaking friend has asked for your help with a college project he/she is doing about celebrating New Year in different countries.</strong></p>" +
         "<p>Write a letter to your friend. In your letter</p>" +
         "<ul>" +
         "<li>say how important New Year is to people in your country</li>" +
         "<li>describe how New Year is celebrated in your country</li>" +
-        "<li>explain what you like about New Year celebrations in your</li>" +
+        "<li>explain what you like about New Year celebrations in your country</li>" +
         "</ul>" +
-        "<p class='task-footer-text'>Write at least 150 words.</p>"
+        "</div>" +
+        "<p class='task-footer-text'>Write at least 150 words.</p>" +
+        "<p class='task-footer-text'>You do <strong>NOT</strong> need to write any addresses.</p>" +
+        "<p class='task-footer-text'>Begin your letter as follows:</p>" +
+        "<p class='dear-line'><strong>Dear ..............................,</strong></p>"
     };
 
     // Paraphrased Test 1 style essay question
@@ -999,6 +1054,41 @@
 
     const allTasks = { 1: task1, 2: task2 };
 
+    const STRUCTURE_BY_TASK = {
+      1: `
+    <p><strong>Informal letter structure</strong></p>
+    <ol>
+      <li><strong>Opening</strong> Dear + first name. One friendly line. One clear purpose sentence.</li>
+      <li><strong>Paragraph 2</strong> Answer bullet point 1.</li>
+      <li><strong>Paragraph 3</strong> Answer bullet point 2.</li>
+      <li><strong>Paragraph 4</strong> Answer bullet point 3.</li>
+      <li><strong>Ending</strong> One friendly closing line, then Best wishes or Kind regards, then your first name.</li>
+    </ol>
+    <p><strong>Checklist</strong></p>
+    <ul>
+      <li>Keep the tone informal and consistent.</li>
+      <li>Cover all bullet points with similar length.</li>
+      <li>No address or date is needed in IELTS.</li>
+    </ul>
+  `,
+      2: `
+    <p><strong>Essay structure</strong></p>
+    <ol>
+      <li><strong>Introduction (2 sentences)</strong> Paraphrase the topic. Answer the question and make your position clear.</li>
+      <li><strong>Body paragraph 1</strong> One main idea. Explain it. Give one example.</li>
+      <li><strong>Body paragraph 2</strong> Second main idea. Explain it. Give one example.</li>
+      <li><strong>Conclusion</strong> One sentence summary or restate your opinion.</li>
+    </ol>
+    <p><strong>Time plan</strong></p>
+    <ul>
+      <li>10 minutes plan</li>
+      <li>5 minutes introduction</li>
+      <li>20 minutes main paragraphs</li>
+      <li>5 minutes conclusion and check</li>
+    </ul>
+  `
+    };
+
     // ------------ STATE ------------
 
     let mode = "practice"; // "practice" or "simulation"
@@ -1008,6 +1098,7 @@
     let timerSeconds = 0;
     let timerId = null;
     let spellcheckEnabled = false;
+    let structureEnabled = false;
 
     // ------------ DOM REFERENCES ------------
 
@@ -1039,6 +1130,11 @@
     const notesBtn = document.getElementById("notesBtn");
     const notesPanel = document.getElementById("notesPanel");
     const closeNotesBtn = document.getElementById("closeNotesBtn");
+    const structureToggleWrapper = document.getElementById("structureToggleWrapper");
+    const structureToggle = document.getElementById("structureToggle");
+    const structurePanel = document.getElementById("structurePanel");
+    const closeStructureBtn = document.getElementById("closeStructureBtn");
+    const structureContent = document.getElementById("structureContent");
 
     const fullScreenBtn = document.getElementById("fullScreenBtn");
     const spellToggleWrapper = document.getElementById("spellToggleWrapper");
@@ -1110,11 +1206,17 @@
 
       if (mode === "practice") {
         spellToggleWrapper.classList.remove("hidden");
+        structureToggleWrapper.classList.remove("hidden");
       } else {
         spellToggleWrapper.classList.add("hidden");
+        structureToggleWrapper.classList.add("hidden");
       }
+
       setSpellcheck(false);
       updateSpellToggleUI();
+
+      setStructure(false);
+      updateStructureToggleUI();
 
       buildTabs();
       currentTaskIndex = 0;
@@ -1176,6 +1278,8 @@
 
       answerInput.value = answers[taskId] || "";
       updateWordCount();
+
+      if (structureEnabled) updateStructureContent();
 
       refreshTabStyles();
     }
@@ -1280,6 +1384,38 @@
         setSpellcheck(!spellcheckEnabled);
         updateSpellToggleUI();
       });
+    }
+
+    if (structureToggle) {
+      structureToggle.addEventListener("click", () => {
+        setStructure(!structureEnabled);
+        updateStructureToggleUI();
+      });
+    }
+
+    if (closeStructureBtn) {
+      closeStructureBtn.addEventListener("click", () => {
+        setStructure(false);
+        updateStructureToggleUI();
+      });
+    }
+
+    function setStructure(on) {
+      structureEnabled = on;
+      if (structurePanel) structurePanel.classList.toggle("hidden", !on);
+      if (on) updateStructureContent();
+    }
+
+    function updateStructureToggleUI() {
+      if (!structureToggle) return;
+      structureToggle.classList.toggle("on", structureEnabled);
+      structureToggle.setAttribute("aria-pressed", structureEnabled ? "true" : "false");
+    }
+
+    function updateStructureContent() {
+      if (!structureContent) return;
+      const taskId = activeTasks[currentTaskIndex];
+      structureContent.innerHTML = STRUCTURE_BY_TASK[taskId] || "<p>No structure available.</p>";
     }
 
     function getSecondsUntil930() {
@@ -1441,10 +1577,12 @@
       notesPanel.classList.add("hidden");
     });
 
-    // Make notes panel draggable by its header
-    (function makeNotesDraggable() {
-      const header = document.querySelector(".notes-header");
-      let isDraggingNotes = false;
+    function makePanelDraggable(panelEl) {
+      if (!panelEl) return;
+      const header = panelEl.querySelector(".notes-header");
+      if (!header) return;
+
+      let dragging = false;
       let startX = 0;
       let startY = 0;
       let startLeft = 0;
@@ -1453,8 +1591,8 @@
       header.style.cursor = "move";
 
       header.addEventListener("mousedown", (e) => {
-        isDraggingNotes = true;
-        const rect = notesPanel.getBoundingClientRect();
+        dragging = true;
+        const rect = panelEl.getBoundingClientRect();
         startX = e.clientX;
         startY = e.clientY;
         startLeft = rect.left;
@@ -1463,35 +1601,38 @@
       });
 
       window.addEventListener("mousemove", (e) => {
-        if (!isDraggingNotes) return;
+        if (!dragging) return;
+
         const dx = e.clientX - startX;
         const dy = e.clientY - startY;
 
-        // keep within viewport
         let newLeft = startLeft + dx;
         let newTop = startTop + dy;
 
         const vw = window.innerWidth;
         const vh = window.innerHeight;
-        const rect = notesPanel.getBoundingClientRect();
+        const rect = panelEl.getBoundingClientRect();
 
         if (newLeft < 0) newLeft = 0;
         if (newTop < 0) newTop = 0;
         if (newLeft + rect.width > vw) newLeft = vw - rect.width;
         if (newTop + rect.height > vh) newTop = vh - rect.height;
 
-        notesPanel.style.left = newLeft + "px";
-        notesPanel.style.top = newTop + "px";
-        notesPanel.style.right = "auto";
-        notesPanel.style.bottom = "auto";
+        panelEl.style.left = newLeft + "px";
+        panelEl.style.top = newTop + "px";
+        panelEl.style.right = "auto";
+        panelEl.style.bottom = "auto";
       });
 
       window.addEventListener("mouseup", () => {
-        if (!isDraggingNotes) return;
-        isDraggingNotes = false;
+        if (!dragging) return;
+        dragging = false;
         document.body.style.userSelect = "";
       });
-    })();
+    }
+
+    makePanelDraggable(notesPanel);
+    makePanelDraggable(document.getElementById("structurePanel"));
 
     // ------------ FULLSCREEN ------------
 
