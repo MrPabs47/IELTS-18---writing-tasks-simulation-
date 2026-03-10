@@ -834,8 +834,24 @@
 
     .app.fullscreen-active .pane-left,
     .app.fullscreen-active .pane-right {
-      padding-top: 26px;
-      padding-bottom: 26px;
+      padding-top: 18px;
+      padding-bottom: 16px;
+    }
+
+    .app.fullscreen-active .task-image-wrap {
+      margin: 8px 0 2px;
+    }
+
+    .app.fullscreen-active .task-image-frame {
+      width: min(100%, 720px);
+      height: min(62vh, calc(100vh - 320px));
+      max-height: calc(100vh - 320px);
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .app.fullscreen-active .task-image-caption {
+      margin-top: 2px;
     }
 
     .app.fullscreen-active .task-image-frame {
