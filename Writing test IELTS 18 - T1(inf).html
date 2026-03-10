@@ -411,6 +411,13 @@
       margin-bottom: 8px;
     }
 
+    .task-heading.task1-heading {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 1.9rem;
+      margin-bottom: 10px;
+    }
+
     .task-meta {
       font-size: 0.95rem;
       margin-bottom: 12px;
@@ -436,6 +443,42 @@
       margin: 14px 0 16px;
       font-size: 0.96rem;
       line-height: 1.6;
+    }
+
+    .task1-box {
+      border-color: #4b5563;
+      background: #fcfcfc;
+    }
+
+    .task1-box p {
+      margin-bottom: 12px;
+    }
+
+    .task1-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .task-image-wrap {
+      margin: 22px auto 12px;
+      text-align: center;
+    }
+
+    .task-image {
+      max-width: 100%;
+      width: min(100%, 760px);
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      cursor: zoom-in;
+      background: #fff;
+    }
+
+    .task-image-caption {
+      margin-top: 8px;
+      font-size: 0.88rem;
+      color: var(--text-soft);
     }
 
     .task-footer-text {
@@ -626,6 +669,57 @@
 
     .submit-modal.hidden {
       display: none;
+    }
+
+    .image-modal.hidden {
+      display: none;
+    }
+
+    .image-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .image-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.74);
+    }
+
+    .image-modal-content {
+      position: relative;
+      width: min(96vw, 1020px);
+      max-height: 92vh;
+      z-index: 1;
+    }
+
+    .image-modal-content img {
+      width: 100%;
+      height: auto;
+      max-height: 92vh;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      background: #fff;
+    }
+
+    .image-modal-close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #fff;
+      cursor: pointer;
+      z-index: 2;
+      font-size: 1rem;
     }
 
     .submit-modal {
@@ -1012,31 +1106,33 @@
     </div>
   </div>
 
+  <div id="imageModal" class="image-modal hidden" aria-hidden="true">
+    <div class="image-modal-backdrop"></div>
+    <div class="image-modal-content" role="dialog" aria-modal="true" aria-label="Task image preview">
+      <button id="closeImageModal" class="image-modal-close" type="button" aria-label="Close image preview">✕</button>
+      <img id="imageModalPreview" src="" alt="" />
+    </div>
+  </div>
+
   <script>
     // ------------ TASK DATA ------------
-    // Replace the prompts below with your own questions if you wish.
+    // Edit only this section for future tests.
 
     const task1 = {
       id: 1,
-      heading: "WRITING TASK 1",
+      heading: "WRITING TASK 1", // WT1 heading
       meta: "You should spend about 20 minutes on this task.",
       bodyHtml:
         "<div class='task-box task1-box'>" +
-        "<p><strong>You stayed at your friend’s house last weekend. Since then, you have realised you left something important there.</strong></p>" +
-        "<p>Write a letter to your friend. In your letter</p>" +
-        "<ul>" +
-        "<li>remind your friend about your visit and what you did together</li>" +
-        "<li>explain what you left behind and why you need it</li>" +
-        "<li>ask your friend to help you get it back, and suggest a time to meet</li>" +
-        "</ul>" +
+        "<p><strong>The diagram below shows how a biofuel called ethanol is produced.</strong></p>" + // WT1 prompt text
+        "<p><strong>Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</strong></p>" +
         "</div>" +
-        "<p class='task-footer-text'>Write at least 150 words.</p>" +
-        "<p class='task-footer-text'>You do <strong>NOT</strong> need to write any addresses.</p>" +
-        "<p class='task-footer-text'>Begin your letter as follows:</p>" +
-        "<p class='dear-line'><strong>Dear ..............................,</strong></p>"
+        "<p class='task-footer-text'>Write at least 150 words.</p>",
+      imageDataUrl: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MjAiIGhlaWdodD0iNjIwIiB2aWV3Qm94PSIwIDAgOTIwIDYyMCI+PHJlY3Qgd2lkdGg9IjkyMCIgaGVpZ2h0PSI2MjAiIGZpbGw9IiNmZmYiLz48dGV4dCB4PSI0NjAiIHk9IjUyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMzMzMiPkJpb2Z1ZWwgcHJvZHVjdGlvbjogaG93IGV0aGFub2wgaXMgbWFkZTwvdGV4dD48ZWxsaXBzZSBjeD0iNDYwIiBjeT0iMzM1IiByeD0iMzUwIiByeT0iMjMwIiBmaWxsPSIjZjdmN2Y3IiBzdHJva2U9IiM2MTYxNjEiIHN0cm9rZS13aWR0aD0iNCIvPjxwYXRoIGQ9Ik0xNjAgMzAwYzExMC0xMDAgMzAwLTEzMCA0NzAtNzAiIHN0cm9rZT0iIzljYTNhZiIgc3Ryb2tlLXdpZHRoPSIxOCIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC42Ii8+PHBhdGggZD0iTTIzMCAzOTBjMTMwIDQwIDI1MCA0NSA0MTAgOCIgc3Ryb2tlPSIjOWNhM2FmIiBzdHJva2Utd2lkdGg9IjE4IiBmaWxsPSJub25lIiBvcGFjaXR5PSIwLjYiLz48dGV4dCB4PSIxOTAiIHk9IjE5MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSIjMzc0MTUxIj5QbGFudHMgYW5kIHRyZWVzIGdyb3c8L3RleHQ+PHRleHQgeD0iNTYwIiB5PSIyMjAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzM3NDE1MSI+SGFydmVzdGluZzwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjMwNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSIjMzc0MTUxIj5QcmUtcHJvY2Vzc2luZzwvdGV4dD48dGV4dCB4PSIyNTUiIHk9IjMxMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSIjMzc0MTUxIj5Qcm9jZXNzaW5nPC90ZXh0Pjx0ZXh0IHg9IjM2MCIgeT0iNDcwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNTQiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMzZjNmNDYiPkV0aGFub2w8L3RleHQ+PHRleHQgeD0iMjIwIiB5PSI1MjAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzM3NDE1MSI+U3VnYXJzICsgbWljcm9iZXMgYWRkZWQ8L3RleHQ+PHRleHQgeD0iNjg4IiB5PSI0ODUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzM3NDE1MSI+RnVlbCB1c2UgYW5kIENP4oKCIHJlbGVhc2VkPC90ZXh0PjxkZWZzPjxtYXJrZXIgaWQ9ImEiIG1hcmtlcldpZHRoPSIxMCIgbWFya2VySGVpZ2h0PSIxMCIgcmVmWD0iOCIgcmVmWT0iMyIgb3JpZW50PSJhdXRvIj48cGF0aCBkPSJNMCwwIEwwLDYgTDksMyB6IiBmaWxsPSIjNmI3MjgwIi8+PC9tYXJrZXI+PC9kZWZzPjxwYXRoIGQ9Ik0yNTUgMjA1IEMgMzQwIDIzMCwgNDMwIDI1MCwgNTIwIDIzNSIgc3Ryb2tlPSIjNmI3MjgwIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiIG1hcmtlci1lbmQ9InVybCgjYSkiLz48cGF0aCBkPSJNNjI1IDI0MCBDIDY2MCAyNTUsIDY5MCAyNzUsIDcwNCAyOTYiIHN0cm9rZT0iIzZiNzI4MCIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIiBtYXJrZXItZW5kPSJ1cmwoI2EpIi8+PHBhdGggZD0iTTU5NSAzMjcgQyA1MzAgMzUwLCA0NjAgMzUwLCAzOTIgMzMwIiBzdHJva2U9IiM2YjcyODAiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgbWFya2VyLWVuZD0idXJsKCNhKSIvPjxwYXRoIGQ9Ik0yNjUgMzM1IEMgMjUwIDM4MCwgMjU1IDQzMCwgMzAwIDUwNSIgc3Ryb2tlPSIjNmI3MjgwIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiIG1hcmtlci1lbmQ9InVybCgjYSkiLz48cGF0aCBkPSJNNDUwIDUwMyBDIDU2MCA1MjAsIDY0NSA1MTAsIDcyNSA0ODAiIHN0cm9rZT0iIzZiNzI4MCIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIiBtYXJrZXItZW5kPSJ1cmwoI2EpIi8+PC9zdmc+", // WT1 base64 data URL (replace this line with your own data URL)
+      imageAlt: "Biofuel production process diagram showing how ethanol is made", // WT1 image alt text
+      imageCaption: "Biofuel production: how ethanol is made"
     };
 
-    // Paraphrased Test 1 style essay question
     const task2 = {
       id: 2,
       heading: "WRITING TASK 2",
@@ -1044,30 +1140,33 @@
       bodyHtml:
         "<p>Write about the following topic:</p>" +
         "<div class='task-box'>" +
-        "<p><strong>The working week should be shorter and workers should have a longer weekend</strong></p>" +
-        "<p><strong>Do you agree or disagree?</strong></p>" +
+        "<p><strong>It is important for everyone, including young people, to save money for their future.</strong></p>" + // WT2 boxed question text
+        "<p><strong>To what extent do you agree or disagree with this statement?</strong></p>" +
         "</div>" +
         "<p class='task-footer-text'>Give reasons for your answer and include any relevant examples from your own knowledge or experience.</p>" +
-        "<p class='task-footer-text'>Write at least 250 words.</p>"
+        "<p class='task-footer-text'>Write at least 250 words.</p>",
+      imageDataUrl: "",
+      imageAlt: "",
+      imageCaption: ""
     };
 
     const allTasks = { 1: task1, 2: task2 };
 
     const STRUCTURE_BY_TASK = {
       1: `
-    <p><strong>Informal letter structure</strong></p>
+    <p><strong>Academic Task 1 structure</strong></p>
     <ol>
-      <li><strong>Opening</strong> Dear + first name. One friendly line. One clear purpose sentence.</li>
-      <li><strong>Paragraph 2</strong> Answer bullet point 1.</li>
-      <li><strong>Paragraph 3</strong> Answer bullet point 2.</li>
-      <li><strong>Paragraph 4</strong> Answer bullet point 3.</li>
-      <li><strong>Ending</strong> One friendly closing line, then Best wishes or Kind regards, then your first name.</li>
+      <li><strong>Opening</strong> Paraphrase what the diagram shows in one sentence.</li>
+      <li><strong>Paragraph 2</strong> Overview: summarise the key stages or trends (no details yet).</li>
+      <li><strong>Paragraph 3</strong> Body paragraph 1: describe the first main stages logically.</li>
+      <li><strong>Paragraph 4</strong> Body paragraph 2: describe the remaining stages and comparisons.</li>
+      <li><strong>Ending</strong> Keep a neutral academic tone and avoid opinions.</li>
     </ol>
     <p><strong>Checklist</strong></p>
     <ul>
-      <li>Keep the tone informal and consistent.</li>
-      <li>Cover all bullet points with similar length.</li>
-      <li>No address or date is needed in IELTS.</li>
+      <li>Highlight major features first, then support with detail.</li>
+      <li>Group related steps instead of listing every tiny item separately.</li>
+      <li>Use present simple tense where appropriate.</li>
     </ul>
   `,
       2: `
@@ -1145,6 +1244,9 @@
     const studentEmailInput = document.getElementById("studentEmail");
     const copySubmissionBtn = document.getElementById("copySubmission");
     const sendSubmissionBtn = document.getElementById("sendSubmission");
+    const imageModal = document.getElementById("imageModal");
+    const imageModalPreview = document.getElementById("imageModalPreview");
+    const closeImageModalBtn = document.getElementById("closeImageModal");
 
     // ------------ MODE SELECTION ------------
 
@@ -1274,6 +1376,9 @@
       taskHeadingEl.textContent = task.heading;
       taskMetaEl.textContent = task.meta;
       taskBodyEl.innerHTML = task.bodyHtml;
+      taskHeadingEl.classList.toggle("task1-heading", taskId === 1);
+
+      renderTaskImage(task);
 
       answerInput.value = answers[taskId] || "";
       updateWordCount();
@@ -1281,6 +1386,42 @@
       if (structureEnabled) updateStructureContent();
 
       refreshTabStyles();
+    }
+
+    function renderTaskImage(task) {
+      const existingWrap = taskBodyEl.querySelector(".task-image-wrap");
+      if (existingWrap) existingWrap.remove();
+
+      if (!task || !task.imageDataUrl) return;
+
+      const wrap = document.createElement("figure");
+      wrap.className = "task-image-wrap";
+
+      const img = document.createElement("img");
+      img.className = "task-image";
+      img.src = task.imageDataUrl;
+      img.alt = task.imageAlt || "Task diagram";
+      img.loading = "eager";
+      img.decoding = "async";
+      img.tabIndex = 0;
+      img.addEventListener("click", () => openImageModal(img.src, img.alt));
+      img.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openImageModal(img.src, img.alt);
+        }
+      });
+
+      wrap.appendChild(img);
+
+      if (task.imageCaption) {
+        const caption = document.createElement("figcaption");
+        caption.className = "task-image-caption";
+        caption.textContent = task.imageCaption;
+        wrap.appendChild(caption);
+      }
+
+      taskBodyEl.appendChild(wrap);
     }
 
     function saveCurrentAnswer() {
@@ -1416,6 +1557,37 @@
       const taskId = activeTasks[currentTaskIndex];
       structureContent.innerHTML = STRUCTURE_BY_TASK[taskId] || "<p>No structure available.</p>";
     }
+
+    function openImageModal(src, alt) {
+      if (!imageModal || !imageModalPreview) return;
+      imageModalPreview.src = src;
+      imageModalPreview.alt = alt || "Task diagram enlarged preview";
+      imageModal.classList.remove("hidden");
+      imageModal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeImageModal() {
+      if (!imageModal || !imageModalPreview) return;
+      imageModal.classList.add("hidden");
+      imageModal.setAttribute("aria-hidden", "true");
+      imageModalPreview.src = "";
+      imageModalPreview.alt = "";
+    }
+
+    if (closeImageModalBtn) {
+      closeImageModalBtn.addEventListener("click", closeImageModal);
+    }
+
+    if (imageModal) {
+      const backdrop = imageModal.querySelector(".image-modal-backdrop");
+      if (backdrop) backdrop.addEventListener("click", closeImageModal);
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && imageModal && !imageModal.classList.contains("hidden")) {
+        closeImageModal();
+      }
+    });
 
     function getSecondsUntil930() {
       const now = new Date();
