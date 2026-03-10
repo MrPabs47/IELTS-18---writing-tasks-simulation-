@@ -459,14 +459,27 @@
     }
 
     .task-image-wrap {
-      margin: 22px auto 12px;
+      margin: 12px 0 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
     }
 
+    .task-image-frame {
+      width: min(100%, 720px);
+      height: clamp(260px, 48vh, 620px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
     .task-image {
-      max-width: 100%;
-      width: min(100%, 760px);
-      height: auto;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
       display: block;
       margin: 0 auto;
       border: 1px solid #d1d5db;
@@ -823,6 +836,10 @@
     .app.fullscreen-active .pane-right {
       padding-top: 26px;
       padding-bottom: 26px;
+    }
+
+    .app.fullscreen-active .task-image-frame {
+      height: clamp(320px, 58vh, 760px);
     }
 
     @media (max-width: 960px) {
@@ -1412,7 +1429,10 @@
         }
       });
 
-      wrap.appendChild(img);
+      const frame = document.createElement("div");
+      frame.className = "task-image-frame";
+      frame.appendChild(img);
+      wrap.appendChild(frame);
 
       if (task.imageCaption) {
         const caption = document.createElement("figcaption");
